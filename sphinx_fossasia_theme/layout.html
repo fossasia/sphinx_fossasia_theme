@@ -1,0 +1,136 @@
+{%- block doctype -%}<!DOCTYPE html>{%- endblock %}
+
+{%- set url_root = pathto('', 1) %}
+
+{%- if url_root == '#' %}
+  {% set url_root = '' %}
+{% endif %}
+
+{%- if not embedded and docstitle %}
+  {%- set titlesuffix = " &mdash; "|safe + docstitle|e %}
+{%- else %}
+  {%- set titlesuffix = "" %}
+{%- endif %}
+
+{%- macro css() %} 
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="{{ pathto('_static/' + style, 1) }}" type="text/css" />
+  <link rel="stylesheet" href="{{ pathto('_static/pygments.css', 1) }}" type="text/css" />
+  {%- for cssfile in css_files %}
+  <link rel="stylesheet" href="{{ pathto(cssfile, 1) }}" type="text/css" />
+  {%- endfor %}
+{%- endmacro %}
+
+{%- macro script() %}
+  <script type="text/javascript">
+    var DOCUMENTATION_OPTIONS = {
+      URL_ROOT:    '{{ url_root }}',
+      VERSION:     '{{ release|e }}',
+      COLLAPSE_INDEX: false,
+      FILE_SUFFIX: '{{ '' if no_search_suffix else file_suffix }}',
+      HAS_SOURCE:  {{ has_source|lower }},
+      SOURCELINK_SUFFIX: '{{ sourcelink_suffix }}'
+    };
+  </script>
+  {%- for scriptfile in script_files %}
+    <script type="text/javascript" src="{{ pathto(scriptfile, 1) }}"></script>
+  {%- endfor %}    
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{%- endmacro %}
+
+{%- macro relbar() %} 
+  <nav class="navbar navbar-default navbar-fixed-top" id="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="#">FOSSASIA <sub>docs</sub></a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+{%- endmacro %}
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1">
+    {%- block htmltitle %}
+    <title>{{ title|striptags|e }}</title>
+    {%- endblock %}
+    {{ css() }}
+    {{ script() }}
+    <link rel="shortcut icon" href="{{ pathto('_static/' + favicon, 1) }}"/>
+
+    {%- block linktags %}
+    {%- if hasdoc('about') %}
+    <link rel="author" title="{{ _('About these documents') }}" href="{{ pathto('about') }}" />
+    {%- endif %}
+
+    {%- if hasdoc('genindex') %}
+    <link rel="index" title="{{ _('Index') }}" href="{{ pathto('genindex') }}" />
+    {%- endif %}
+
+    {%- if hasdoc('search') %}
+    <link rel="search" title="{{ _('Search') }}" href="{{ pathto('search') }}" />
+    {%- endif %}
+
+    {%- if hasdoc('copyright') %}
+    <link rel="copyright" title="{{ _('Copyright') }}" href="{{ pathto('copyright') }}" />
+    {%- endif %}
+    {%- endblock %}
+  </head>
+  <body>
+    <div class="container-fluid main">
+      {%- block header %}{% endblock %}
+      {%- block relbar1 %}{{ relbar() }}{% endblock %}
+      {%- block content %}
+      <div class="container">
+        <div class="document"> <!-- Document -->
+          {%- block document %}
+          <div> <!-- Document Wrapper -->
+            <div class="body" role="main"> <!-- Body-->
+              {%- block body %} {% endblock %}
+            </div>
+          </div>
+          {%- endblock %} 
+        </div>
+      </div>
+      {%- endblock %}
+      {%- block footer %}
+      <div class="footer-container">
+        <footer role="contentinfo" class="footer">
+          <div class="container">
+            {%- block extra_footer %} {%- endblock %}
+            <div class="copy">
+              {%- if show_copyright %}
+                {%- if hasdoc('copyright') %}
+                  {%- trans path=pathto('copyright'), copyright=copyright|e %}&copy; <a href="{{ path }}">{{ copyright }}</a> {{ copyright}}.{% endtrans %}
+                {%- else %}
+                  {% trans copyright=copyright|e %}&copy; {{ copyright }}. All Rights Reserved.{% endtrans %}
+                {%- endif %}
+              {%- endif %}
+              {%- if last_updated %}
+                {% trans last_updated=last_updated|e %}Last updated on {{ last_updated }}.{% endtrans %}
+              {%- endif %}
+              {%- if show_sphinx %}
+                {% trans sphinx_version=sphinx_version|e %}Created using <a href="http://sphinx-doc.org/">Sphinx</a> {{ sphinx_version }}.{% endtrans %}
+              {%- endif %}
+            </div>
+          </div>
+        </footer>
+      </div>
+      {%- endblock %}
+    </div>
+  </body>
+</html>

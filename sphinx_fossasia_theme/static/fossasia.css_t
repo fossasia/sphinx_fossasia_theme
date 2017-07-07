@@ -1,0 +1,18 @@
+body {
+    background-color: #eeeeee;
+    font-family: 'Open Sans',"Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: #777777;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.main {
+    background-color: #ffffff;
+    padding: 80px 30px 30px 30px;
+}
+
+.footer {
+    padding: 72px 0px 36px 0px;
+    background: #f5f5f5;
+    margin: 10px -30px -30px -30px;
+}
