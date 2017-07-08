@@ -38,6 +38,46 @@
   {%- endfor %}    
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('a[href*="#"]').not('[href="#"]').not('[href="#0"]').click(function(event) {
+        if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+          if (target.length) {
+            event.preventDefault();
+            $('html, body').animate({
+              scrollTop: target.offset().top - 80
+            }, 1000, function() {
+              var $target = $(target);
+                $target.focus();
+              if ($target.is(":focus")) { // Checking if the target was focused
+              return false;
+              } else {
+                $target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
+                $target.focus(); // Set focus again
+              };
+            });
+          }
+        }
+      });
+
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > 50) {
+          $('#back-to-top').fadeIn();
+        } else {
+          $('#back-to-top').fadeOut();
+        }
+      });
+
+      $('#back-to-top').click(function () {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    });
+  </script>
 {%- endmacro %}
 
 {%- macro relbar() %} 
@@ -64,6 +104,44 @@
       </div>
     </div>
   </nav>
+{%- endmacro %}
+
+{%- macro sidebar() %}
+  <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+    <div class="sphinxsidebarwrapper">
+      {%- block sidebarlogo %}
+      {%- if logo %}
+        <p class="logo"><a href="{{ pathto(master_doc) }}">
+          <img class="logo img-responsive" src="{{ pathto('_static/' + logo, 1) }}" alt="Logo" style="width: 100%" />
+        </a></p>
+      {%- endif %}
+      {%- endblock %}
+
+      {%- if sidebars != None %}
+        {#- new style sidebar: explicitly include/exclude templates #}
+        {%- for sidebartemplate in sidebars %}
+        {%- include sidebartemplate %}
+        {%- endfor %}
+      {%- else %}
+        {#- old style sidebars: using blocks -- should be deprecated #}
+        {%- block sidebarsearch %}
+        {%- include "searchbox.html" %}
+        {%- endblock %}
+        {%- block sidebartoc %}
+        {%- include "localtoc.html" %}
+        {%- endblock %}
+        {%- block sidebarrel %}
+        {%- include "relations.html" %}
+        {%- endblock %}
+        {%- block sidebarsourcelink %}
+        {%- include "sourcelink.html" %}
+        {%- endblock %}
+        {%- if customsidebar %}
+        {%- include customsidebar %}
+        {%- endif %}
+      {%- endif %}
+    </div>
+  </div>
 {%- endmacro %}
 
 {%- macro extrafooter() %}
@@ -107,7 +185,7 @@ FOSSASIA is the premier Free and Open Source technology organization in Asia for
         <li><a target="_self" href="https://github.com/fossasia"><i class="fa fa-github fa-lg"></i></a></li>
       </ul>
       </div>
-    </div> 
+    </div>
 {%- endmacro %}
 
 <html>
@@ -145,7 +223,10 @@ FOSSASIA is the premier Free and Open Source technology organization in Asia for
       {%- block relbar1 %}{{ relbar() }}{% endblock %}
       {%- block content %}
       <div class="container">
-        <div class="document"> <!-- Document -->
+        <div class="col-md-3 hidden-sm hidden-xs">
+          {%- block sidebar1 %} {{ sidebar() }} {% endblock %}
+        </div>
+        <div class="document col-md-9"> <!-- Document -->
           {%- block document %}
           <div> <!-- Document Wrapper -->
             <div class="body" role="main"> <!-- Body-->
@@ -154,8 +235,8 @@ FOSSASIA is the premier Free and Open Source technology organization in Asia for
           </div>
           {%- endblock %} 
         </div>
+        {%- endblock %}
       </div>
-      {%- endblock %}
       {%- block footer %}
       <div class="footer-container">
         <footer role="contentinfo" class="footer">

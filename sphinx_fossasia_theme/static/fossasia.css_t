@@ -6,6 +6,10 @@ body {
     line-height: 24px;
 }
 
+ul {
+    padding-left: 20px;
+}
+
 .main {
     max-width: 1600px;
     margin: 0 auto;
@@ -29,11 +33,7 @@ body {
     text-align: left;
     line-height: 1;
 }
-ul {
-    list-style: none;
-    margin: 0px;
-    padding: 0px;
-}
+
 footer.footer .menu li {
     float: none;
     margin-bottom: 12px;
@@ -107,3 +107,10 @@ a {
     text-align: right;
     font-size: 16px;
 }
+
+.footer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
