@@ -2,6 +2,7 @@ from setuptools import setup
 import os.path
 import sys
 
+
 setup(
     name = 'sphinx_fossasia_theme',
     version = '0.0.1',
@@ -15,7 +16,10 @@ setup(
     entry_points = {
         'sphinx.html_themes': [
             'sphinx_fossasia_theme = sphinx_fossasia_theme'
-        ]
+        ],
+        'sphinx_themes': [
+            'path = sphinx_fossasia_theme:get_html_theme_path'
+        ],
     },
     install_requires = ['sphinx>=1.3'],
   	platforms = 'any',
