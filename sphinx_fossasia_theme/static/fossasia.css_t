@@ -114,3 +114,7 @@ a {
     padding: 0;
 }
 
+.highlighted {
+    background-color: #FFEB3B;
+    border-radius: 10px;
+}
