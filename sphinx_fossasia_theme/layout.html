@@ -36,7 +36,6 @@
   {%- for scriptfile in script_files %}
     <script type="text/javascript" src="{{ pathto(scriptfile, 1) }}"></script>
   {%- endfor %}    
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script>
     $(document).ready(function(){
@@ -61,7 +60,6 @@
           }
         }
       });
-
       $(window).scroll(function () {
         if ($(this).scrollTop() > 50) {
           $('#back-to-top').fadeIn();
@@ -69,7 +67,6 @@
           $('#back-to-top').fadeOut();
         }
       });
-
       $('#back-to-top').click(function () {
         $('body,html').animate({
           scrollTop: 0
@@ -188,16 +185,44 @@ FOSSASIA is the premier Free and Open Source technology organization in Asia for
     </div>
 {%- endmacro %}
 
-<html>
+{%- if html_tag %}
+{{ html_tag }}
+{%- else %}
+<html xmlns="http://www.w3.org/1999/xhtml"{% if language is not none %} lang="{{ language }}"{% endif %}>
+{%- endif %}
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1">
+    {%- if use_meta_charset %}
+    <meta charset="{{ encoding }}" />
+    {%- else %}
+    <meta http-equiv="Content-Type" content="text/html; charset={{ encoding }}" />
+    {%- endif %}
+    {{- metatags }}
+
     {%- block htmltitle %}
-    <title>{{ title|striptags|e }}</title>
+    <title>{{ title|striptags|e }}{{ titlesuffix }}</title>
     {%- endblock %}
-    {{ css() }}
-    {{ script() }}
+
+    {%- block csss %}
+    {{- css() }}
+    {%- endblock %}
+
+    {%- if not embedded %}
+
+    {%- block scripts %}
+    {{- script() }}
+    {%- endblock %}
+
+    {%- if use_opensearch %}
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="{% trans docstitle=docstitle|e %}Search within {{ docstitle }}{% endtrans %}"
+          href="{{ pathto('_static/opensearch.xml', 1) }}"/>
+    {%- endif %}
+
+    {%- if favicon %}
     <link rel="shortcut icon" href="{{ pathto('_static/' + favicon, 1) }}"/>
+    {%- endif %}
+
+    {%- endif %}
 
     {%- block linktags %}
     {%- if hasdoc('about') %}
@@ -215,7 +240,17 @@ FOSSASIA is the premier Free and Open Source technology organization in Asia for
     {%- if hasdoc('copyright') %}
     <link rel="copyright" title="{{ _('Copyright') }}" href="{{ pathto('copyright') }}" />
     {%- endif %}
+
+    {%- if next %}
+    <link rel="next" title="{{ next.title|striptags|e }}" href="{{ next.link|e }}" />
+    {%- endif %}
+
+    {%- if prev %}
+    <link rel="prev" title="{{ prev.title|striptags|e }}" href="{{ prev.link|e }}" />
+    {%- endif %}
     {%- endblock %}
+
+    {%- block extrahead %} {% endblock %}
   </head>
   <body>
     <div class="container-fluid main">
