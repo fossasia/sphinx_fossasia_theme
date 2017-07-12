@@ -118,3 +118,9 @@ a {
     background-color: #FFEB3B;
     border-radius: 10px;
 }
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
