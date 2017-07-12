@@ -12,3 +12,6 @@ develop-eggs
 .installed.cfg
 lib
 lib64
+
+# IDE
+.idea

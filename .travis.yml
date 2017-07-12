@@ -1,0 +1,10 @@
+language: python
+deploy:
+  provider: pypi
+  distributions: sdist bdist_wheel
+  user: ujjwalbhardwaj
+  password:
+    secure: hiSw8wAxxlzQZD16JqWh6iCmjDw4SBFVU6r88c7c0wusqG2QTtZGUrr2SwOjKDyhrFye/V2ldubYTFOu4fAvh/VE+OYeQe19xaetgiTGiWD6fRaPXGCiEZ74zuBK7V7zM5CFOOt4XgRqslnU9kQdAbTmwADUaLgve7sC+6NFHoAdIS1BGbwjrRuQDowcKDc6LRhCd5wi7J9e/6Yp3fPOrh6iTTK2BthirsQ63YttxO6Y7X3LZwWeriTw1tulxhoevOjT7VeqRUiv/v4tpqqamKLtKIaYSe6iUPycBs3mChxyAWRbiEtSDb5MLXYkP+S3svBu6fU46unI8ygOwbUlMkNB8+NPGcupPar6blRnLhdNOuc5Xza+xy60UKIVw51Zu932LGNHK8rD2TrVnyFC1j1S9wOtz8kqgdKmd7tPCG27fb/jpmYOXEOqQ37ckiXgQuJ/McK3jajuJkJKQpNU4Pdw+CGZmtYCX71iQg316n2kLwX/X0Yud+HXuFa4u29PLG+rUihmWa+sXfWHe/DI6MKsMUxbuCJ4NlnDrhHFMVl6pLsr4hCDJT47Jua2Qw1KMjJmfZMuATs2RisbHCuoSdA246PhDGEPBwwGSatQvhE7KiYGZX9GdFwhkXeeUeD6j3F4TAIozf0ce1tB5/SXJ0t4eCN0Mrg++bMLtVZDHuI=
+  on:
+    tags: true
+    repo: fossasia/sphinx_fossasia_theme
