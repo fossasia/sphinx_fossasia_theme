@@ -86,17 +86,33 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>                        
         </button>
+        {%- if theme_show_fossasia_logo|lower == "true" %}
         <a class="navbar-brand" href="#"><img class="img-responsive" src="http://fossasia.org/img/fossasia-dark.png" style="width: 50%" /></a>
+        {%- endif %}
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right menu">
-              <li><a href="#">About</a></li>
-              <li><a href="#">Docs</a></li>
-              <li><a href="http://blog.fossasia.org/">Blog</a></li>
-              <li><a href="http://fossasia.org/donate/">Donate</a></li>
-              <li><a href="http://blog.fossasia.org/contact/">Contact</a></li>
-              <li class="social-link hidden-md hidden-sm hidden-xs"><a href="https://twitter.com/fossasia"><i class="fa fa-twitter fa-lg"></i></a></li>
-              <li class="social-link hidden-md hidden-sm hidden-xs"><a href="https://facebook.com/fossasia"><i class="fa fa-facebook fa-lg"></i></a></li>
+              {% if theme_link_about %}
+              <li><a href={{ theme_link_about }}>About</a></li>
+              {% endif %}
+              {% if theme_link_docs %}
+              <li><a href={{ theme_link_docs }}>Docs</a></li>
+              {% endif %}
+              {% if theme_link_blog %}
+              <li><a href={{ theme_link_blog }}>Blog</a></li>
+              {% endif %}
+              {% if theme_link_donate %}
+              <li><a href={{ theme_link_donate }}>Donate</a></li>
+              {% endif %}
+              {% if theme_link_contact %}
+              <li><a href={{ theme_link_contact }}>Contact</a></li>
+              {% endif %}
+              {% if theme_link_twitter %}
+              <li class="social-link hidden-md hidden-sm hidden-xs"><a href={{ theme_link_twitter }}><i class="fa fa-twitter fa-lg"></i></a></li>
+              {% endif %}
+              {% if theme_link_facebook %}
+              <li class="social-link hidden-md hidden-sm hidden-xs"><a href={{ theme_link_facebook }}><i class="fa fa-facebook fa-lg"></i></a></li>
+              {% endif %}
           </ul>
       </div>
     </div>
