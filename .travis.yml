@@ -1,4 +1,8 @@
 language: python
+
+script:
+  - echo "Dummy echo statement"             # This is needed because script section is compulsory when language is python
+
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
